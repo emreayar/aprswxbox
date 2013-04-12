@@ -5,9 +5,9 @@ An Arduino project that collects basic weather parameters and sends to APRS netw
 
 ##libraries
 
-The DHT library is from AdaFruit [https://github.com/adafruit/DHT-sensor-library](http://).
+The DHT library is from AdaFruit [https://github.com/adafruit/DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library).
 
-The BMP085 library is also from AdaFruit [https://github.com/adafruit/Adafruit-BMP085-Library](http://)
+The BMP085 library is also from AdaFruit [https://github.com/adafruit/Adafruit-BMP085-Library](https://github.com/adafruit/Adafruit-BMP085-Library)
 
 ##Instructions
 
@@ -18,3 +18,7 @@ A complete set of hardware includes an Arduino, a W5100 shield, a DHT21 sensor a
 You will need a 5-digit passcode to sign in the APRS-IS network which is intended only for amateur radio operators.
 
 For more information, see [http://www.yangl1996.com/?p=132](http://www.yangl1996.com/?p=132) (in Chinese, maybe English later)
+
+##Aim
+I want to add liquid crystal display support but actually have little time.
+Hopefully you could contribute to it~
