@@ -17,7 +17,7 @@ A complete set of hardware includes an Arduino, a W5100 shield, a DHT21 sensor a
 
 You will need a 5-digit passcode to sign in the APRS-IS network which is intended only for amateur radio operators.
 
-For more information, see [http://www.yangl1996.com/?p=132](http://www.yangl1996.com/?p=132) (in Chinese, maybe English later)
+For more information, see [http://www.yangl1996.com/](http://www.yangl1996.com) 
 
 ##Aim
 I want to add liquid crystal display support but actually have little time.
