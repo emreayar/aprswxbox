@@ -50,9 +50,10 @@ Adafruit_BMP085 bmp;
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 //rs, rw, enable, d4, d5, d6, d7
 
+boolean LCD = true;//modify this to turn on or off the LCD function.
 void setup()
 { 
-  boolean LCD = true;//modify this to turn on or off the LCD function.
+  
   if ( LCD == true ) {
     lcd.begin(16, 2);//set to (16, 2) for a 1602 dlsplay, (20, 4) for a TC2004A-03 display. 
     lcd.home();
