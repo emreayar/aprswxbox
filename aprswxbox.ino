@@ -52,9 +52,8 @@ LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 
 void setup()
 {
-  boolean LCD = false;//turn on or off LCD display by modifying this boolean.
   if ( LCD == true ) {
-    lcd.begin(16, 2);
+    lcd.begin(16, 2);//set to (16, 2) for a 1602 dlsplay, (20, 4) for a TC2004A-03 display. 
     lcd.home();
     lcd.print("APRS WX Box"); }//setting up LCD display
   Serial.begin(9600);
@@ -75,6 +74,7 @@ void loop()
   float t =0;
   float b =0;
   boolean sent = false;
+  boolean LCD = false;//turn on or off LCD display by modifying this boolean.
 
   if ( dht.read() )
   {
