@@ -1,4 +1,3 @@
-
 /*
 APRS Weather Station
 coded by Yang Lei
@@ -18,6 +17,8 @@ Beta 1.8
 #include <EthernetServer.h>
 #include <EthernetUdp.h>
 #include <util.h>
+#include <LiquidCrystal.h>
+
 #define DHTTYPE DHT21
 #define DHTPIN 3
 
@@ -46,15 +47,26 @@ EthernetClient client;//Create a client
 #define DHTPIN 3
 DHT dht(DHTPIN, DHTTYPE);
 Adafruit_BMP085 bmp;
+LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
+//rs, rw, enable, d4, d5, d6, d7
 
 void setup()
 {
+  boolean LCD = false;//turn on or off LCD display by modifying this boolean.
+  if ( LCD == true ) {
+    lcd.begin(16, 2);
+    lcd.home();
+    lcd.print("APRS WX Box"); }//setting up LCD display
   Serial.begin(9600);
   delay(2000);
   Serial.println();
   Serial.println("APRS WX Station");
   bmp.begin();
   initNet();  
+  if ( LCD == true ) {
+    lcd.clear(); 
+    lcd.home();
+    lcd.print("Initiating Net"); }
 }
 
 void loop()
@@ -74,7 +86,15 @@ void loop()
     Serial.print(" ");
     Serial.print(t);    
     Serial.print(" ");
-    Serial.println(b);    
+    Serial.println(b);   
+    if ( LCD == true ){
+       lcd.clear();
+       lcd.home();
+       lcd.print(h);
+       lcd.print(" ");
+       lcd.print(t);
+       lcd.print(" ");
+       lcd.print(b);}
     
     if ( client.connect(SVR_NAME, SVR_PORT) ) 
     { 
@@ -82,6 +102,10 @@ void loop()
       if ( wait4content(&client, SVR_PROMPT, 11) )
       {
         Serial.println("Prompt ok");
+        if (LCD == true){
+        lcd.clear();
+        lcd.home();
+        lcd.print("Prompt ok");}
         client.print("user ");
         client.print(callsign);
         client.print(" pass ");
@@ -91,6 +115,10 @@ void loop()
         if ( wait4content(&client, SVR_VERIFIED, 8) ) 
         {
           Serial.println("Login ok");
+          if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("Login ok");}
           client.print(callsign);
           client.print(">APRS,TCPIP*:");
           client.print("!");
@@ -105,6 +133,10 @@ void loop()
           client.print("APRSWXBox ");//Sending comments
           client.println(VER);
           Serial.println("Data sent ok");
+          if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("Packet Sent");}
           delay(5000);
           client.stop();
           Serial.println("Server disconnected");
@@ -115,16 +147,28 @@ void loop()
         else 
         {
           Serial.println("Login failed.");
+          if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("Login failed");}
         }
       }  //  if prompt
       else 
       {
         Serial.println("No prompt from the server.");
+        if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("No Prompt");}
       }
     }  //  if connect
     else 
     {
       Serial.println("Can not connect to the server.");
+      if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("Conn failed");}
     }
     if ( !sent ) 
     {
@@ -134,6 +178,10 @@ void loop()
   else 
   {
     Serial.println("DHT fail");
+    if (LCD == true){
+            lcd.clear();
+            lcd.home();
+            lcd.print("DHT fail");}
   }
   delay(5000);
 }
