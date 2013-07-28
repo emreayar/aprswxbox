@@ -28,7 +28,7 @@ char SVR_NAME[] = "hangzhou.aprs2.net";
 #define passcode "your passcode"
 #define location "0000.00N/00000.00E"
 
-#define VER "Beta2.1forDue"
+#define VER "BetaForDue"
 #define SVR_PROMPT "javAPRSSrvr"
 #define SVR_VERIFIED "verified"
 int REPORT_INTERVAL = 10;
