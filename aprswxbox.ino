@@ -1,9 +1,6 @@
-/*
-APRS Weather Station
-coded by Yang Lei
-20130728
-Beta 1.8
-*/
+//This sketch has been modified to be compatible with Arduino Due.
+//The air pressure function has been removed since BMP085 library does not support Due.
+//APRSWXBox for Due Beta 2.1
 
 #include <DHT.h>
 
@@ -31,7 +28,7 @@ char SVR_NAME[] = "hangzhou.aprs2.net";
 #define passcode "your passcode"
 #define location "0000.00N/00000.00E"
 
-#define VER "2.0"
+#define VER "Beta2.1forDue"
 #define SVR_PROMPT "javAPRSSrvr"
 #define SVR_VERIFIED "verified"
 int REPORT_INTERVAL = 10;
@@ -48,7 +45,10 @@ DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 //rs, rw, enable, d4, d5, d6, d7
 
-boolean LCD = true;//modify this to turn on or off the LCD function.
+//****************************************************************************
+boolean LCD = true;//*MODIFY THIS to turn on or off the LCD function*
+//****************************************************************************
+
 void setup()
 { 
   
