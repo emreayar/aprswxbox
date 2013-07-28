@@ -1,8 +1,6 @@
 /*
 APRS Weather Station
 coded by Yang Lei
-20120412
-Beta 1.8
 */
 
 #include <Adafruit_BMP085.h>
@@ -23,7 +21,7 @@ Beta 1.8
 #define DHTPIN 3
 
 //****************************************************************************
-//Some network settings below.
+//  Some network settings below.
 byte mac[] = {0xDE, 0xAD, 0xBE, 0x00, 0xFE, 0x00};//Set your MAC Address here. 
 char SVR_NAME[] = "hangzhou.aprs2.net";
 #define SVR_PORT 14580
@@ -31,6 +29,8 @@ char SVR_NAME[] = "hangzhou.aprs2.net";
 #define callsign "yourcall-13"
 #define passcode "your passcode"
 #define location "0000.00N/00000.00E"
+//  modify this to turn on or off the LCD function.
+boolean LCD = true;
 
 #define VER "2.0"
 #define SVR_PROMPT "javAPRSSrvr"
@@ -41,7 +41,7 @@ int REPORT_INTERVAL = 10;
 
 //****************************************************************************
 
-EthernetClient client;//Create a client
+EthernetClient client;
 
 #define DHTTYPE DHT22
 #define DHTPIN 3
@@ -50,24 +50,27 @@ Adafruit_BMP085 bmp;
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 //rs, rw, enable, d4, d5, d6, d7
 
-boolean LCD = true;//modify this to turn on or off the LCD function.
+
 void setup()
-{ 
-  
-  if ( LCD == true ) {
+{
+  if ( LCD == true ) 
+  {
     lcd.begin(16, 2);//set to (16, 2) for a 1602 dlsplay, (20, 4) for a TC2004A-03 display. 
     lcd.home();
-    lcd.print("APRS WX Box"); }//setting up LCD display
+    lcd.print("APRS WX Box"); 
+  }//setting up LCD display
   Serial.begin(9600);
   delay(2000);
   Serial.println();
   Serial.println("APRS WX Station");
   bmp.begin();
   initNet();  
-  if ( LCD == true ) {
+  if ( LCD == true )
+  {
     lcd.clear(); 
     lcd.home();
-    lcd.print("Initiating Net"); }
+    lcd.print("Initiating Net"); 
+  }
 }
 
 void loop()
@@ -76,28 +79,26 @@ void loop()
   float t =0;
   float b =0;
   boolean sent = false;
-  
-
   if ( dht.read() )
   {
     h = dht.readHumidity();
     t = dht.readTemperature(true);
     b = bmp.readPressure();
-    
     Serial.print(h);
     Serial.print(" ");
     Serial.print(t);    
     Serial.print(" ");
     Serial.println(b);   
-    if ( LCD == true ){
+    if ( LCD == true )
+    {
        lcd.clear();
        lcd.home();
        lcd.print(h);
        lcd.print(" ");
        lcd.print(t);
        lcd.print(" ");
-       lcd.print(b);}
-    
+       lcd.print(b);
+    }
     if ( client.connect(SVR_NAME, SVR_PORT) ) 
     { 
       Serial.println("Server connected");
@@ -117,10 +118,12 @@ void loop()
         if ( wait4content(&client, SVR_VERIFIED, 8) ) 
         {
           Serial.println("Login ok");
-          if (LCD == true){
+          if (LCD == true)
+          {
             lcd.clear();
             lcd.home();
-            lcd.print("Login ok");}
+            lcd.print("Login ok");
+          }
           client.print(callsign);
           client.print(">APRS,TCPIP*:");
           client.print("!");
@@ -135,10 +138,12 @@ void loop()
           client.print("APRSWXBox ");//Sending comments
           client.println(VER);
           Serial.println("Data sent ok");
-          if (LCD == true){
+          if (LCD == true)
+          {
             lcd.clear();
             lcd.home();
-            lcd.print("Packet Sent");}
+            lcd.print("Packet Sent");
+          }
           delay(5000);
           client.stop();
           Serial.println("Server disconnected");
@@ -149,28 +154,34 @@ void loop()
         else 
         {
           Serial.println("Login failed.");
-          if (LCD == true){
+          if (LCD == true)
+          {
             lcd.clear();
             lcd.home();
-            lcd.print("Login failed");}
+            lcd.print("Login failed");
+          }
         }
       }  //  if prompt
       else 
       {
         Serial.println("No prompt from the server.");
-        if (LCD == true){
-            lcd.clear();
-            lcd.home();
-            lcd.print("No Prompt");}
+        if (LCD == true)
+        {
+          lcd.clear();
+          lcd.home();
+          lcd.print("No Prompt");
+        }
       }
     }  //  if connect
     else 
     {
       Serial.println("Can not connect to the server.");
-      if (LCD == true){
-            lcd.clear();
-            lcd.home();
-            lcd.print("Conn failed");}
+      if (LCD == true)
+      {
+        lcd.clear();
+        lcd.home();
+        lcd.print("Conn failed");
+      }
     }
     if ( !sent ) 
     {
@@ -180,10 +191,12 @@ void loop()
   else 
   {
     Serial.println("DHT fail");
-    if (LCD == true){
-            lcd.clear();
-            lcd.home();
-            lcd.print("DHT fail");}
+    if (LCD == true)
+    {
+      lcd.clear();
+      lcd.home();
+      lcd.print("DHT fail");
+    }
   }
   delay(5000);
 }
@@ -191,7 +204,6 @@ void loop()
 void initNet()
 {
   Serial.println("Initiating net");
-  
   do {
   } while ( Ethernet.begin(mac) == 0 );
   delay(1000);//wait for the Ethernet Shield for 1 second
