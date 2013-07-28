@@ -1,11 +1,10 @@
 /*
 APRS Weather Station
 coded by Yang Lei
-20120412
+20130728
 Beta 1.8
 */
 
-#include <Adafruit_BMP085.h>
 #include <DHT.h>
 
 #include <Wire.h>
@@ -46,7 +45,6 @@ EthernetClient client;//Create a client
 #define DHTTYPE DHT22
 #define DHTPIN 3
 DHT dht(DHTPIN, DHTTYPE);
-Adafruit_BMP085 bmp;
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 //rs, rw, enable, d4, d5, d6, d7
 
@@ -62,7 +60,6 @@ void setup()
   delay(2000);
   Serial.println();
   Serial.println("APRS WX Station");
-  bmp.begin();
   initNet();  
   if ( LCD == true ) {
     lcd.clear(); 
@@ -82,7 +79,6 @@ void loop()
   {
     h = dht.readHumidity();
     t = dht.readTemperature(true);
-    b = bmp.readPressure();
     
     Serial.print(h);
     Serial.print(" ");
