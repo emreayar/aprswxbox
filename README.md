@@ -3,6 +3,8 @@ aprswxbox
 
 An Arduino project that collects basic weather parameters and sends to APRS network.
 
+##NOTE: Be sure to GET REQUIRED LIBRARIES listed below!
+
 ##libraries
 
 The DHT library is from AdaFruit [https://github.com/adafruit/DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library).
