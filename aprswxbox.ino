@@ -76,8 +76,6 @@ void loop()
     if ( client.connect(SVR_NAME, SVR_PORT) ) 
     { 
       Serial.println("Server connected");
-      if ( wait4content(&client, SVR_PROMPT, 11) )
-      {
         Serial.println("Prompt ok");
         client.print("user ");
         client.print(callsign);
@@ -113,11 +111,6 @@ void loop()
         {
           Serial.println("Login failed.");
         }
-      }  //  if prompt
-      else 
-      {
-        Serial.println("No prompt from the server.");
-      }
     }  //  if connect
     else 
     {
