@@ -41,6 +41,7 @@ EthernetClient client;//Create a client
 
 #define DHTTYPE DHT22
 #define DHTPIN 3
+#define RAINPIN 4
 DHT dht(DHTPIN, DHTTYPE);
 Adafruit_BMP085 bmp;
 
@@ -93,7 +94,15 @@ void loop()
           client.print("_");
           client.print("000/000g000t");
           sendTemp(t);
-          client.print("r000p000P000h");
+          if (digitalRead(RAINPIN) == 0)
+          {
+            client.print("r010");
+          }
+          else 
+          {
+            client.print("r000");
+          }
+          client.print("p000P000h");
           sendHumi(h);
           client.print("b");
           sendBaro(b);
